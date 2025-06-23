@@ -1,20 +1,20 @@
 ﻿using System;
 
-namespace DIP.Antes
+namespace DIP.Depois
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var relatorio = new Relatorio();
+            IExportador exportador = new ExportadorPDF();
+            var relatorio = new Relatorio(exportador);
             relatorio.Exportar();
+
+            Console.WriteLine();
+
+            IExportador outroExportador = new ExportadorExcel();
+            var relatorioExcel = new Relatorio(outroExportador);
+            relatorioExcel.Exportar();
         }
     }
-    
-    /*
-         Problema:
-            A classe Relatorio depende diretamente da classe concreta ExportadorPDF.
-            Se você quiser exportar para Excel ou CSV, terá que modificar a classe Relatorio, 
-            o que viola o OCP e o DIP.
-    */
 }
