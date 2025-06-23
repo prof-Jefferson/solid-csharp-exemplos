@@ -1,26 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ISP.Antes
+namespace ISP.Depois
 {
     class Program
     {
         static void Main(string[] args)
         {
-            IFuncionario gerente = new Gerente();
-            IFuncionario estagiario = new Estagiario();
+            List<ITrabalhador> trabalhadores = new List<ITrabalhador>
+            {
+                new Gerente(),
+                new Estagiario()
+            };
 
-            gerente.Trabalhar();
-            estagiario.Trabalhar();
+            foreach (var t in trabalhadores)
+            {
+                t.Trabalhar();
+            }
 
+            Console.WriteLine("\nGerente realizando ações específicas:");
+
+            var gerente = new Gerente();
             gerente.Gerenciar();
-            estagiario.Gerenciar(); // Vai lançar exceção!
+            gerente.ReporEstoque();
         }
     }
-    /*
-    Problema:
-        A interface IFuncionario obriga todas as classes a implementarem métodos que
-        não fazem sentido para todos os perfis. O Estagiario não deveria gerenciar
-        nem repor estoque, mas é forçado a implementar esses métodos — o que quebra o
-        ISP.
-    */
 }
